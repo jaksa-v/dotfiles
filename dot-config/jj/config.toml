@@ -4,6 +4,13 @@
 name = "Jaksa Vlahovic"
 email = "jaksa.vlahovic1@gmail.com"
 
+# Work directory configuration
+[[--scope]]
+--when.repositories = ["/Users/jaksa/Work/"]
+[--scope.user]
+name = "Jaksa Vlahovic"
+email = "jaksa.vlahovic@codeus.me"
+
 [aliases]
 # tug: bring nearest bookmark up to recent commit
 tug = ["bookmark", "move", "--from", "closest_bookmark(@-)", "--to", "@-"]
@@ -39,4 +46,3 @@ editor = "nvim"
 default-command = "log"
 diff-editor = ":builtin"
 merge-editor = ":builtin"
-
