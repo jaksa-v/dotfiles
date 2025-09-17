@@ -1,7 +1,7 @@
 font-family = "MonoLisa Trial"
-font-size = 16
+font-size = 15
 
-theme = dark:NightOwlDark,light:GitHub-Light-Default
+theme = dark:NightOwlDark,light:GitHub Light Default
 
 keybind = shift+enter=text:\n
 
