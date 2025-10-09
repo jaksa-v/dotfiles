@@ -87,6 +87,9 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# psql
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
 # git
 alias monsterclean='git clean -fdx -e .jj/'
 alias gst='git status'
@@ -106,15 +109,18 @@ po() {
   gh pr list --author "@me" | fzf --header 'checkout PR' | awk '{print $(NF-5)}' | xargs git checkout
 }
 alias up='git push'
-alias upf='git push --force'
+alias upf='git push --force-with-lease'
 alias pu='git pull'
 alias pur='git pull --rebase'
 alias fe='git fetch'
 alias re='git rebase'
-alias lr='git l -30'
+alias lr='git l -20'
 alias cdr='cd $(git rev-parse --show-toplevel)' # cd to git Root
 alias hs='git rev-parse --short HEAD'
 alias hm='git log --format=%B -n 1 HEAD'
+
+alias gh-create-private='gh repo create --private --source=. --remote=origin && git push -u --all && gh browse'
+alias gh-create-public='gh repo create --public --source=. --remote=origin && git push -u --all && gh browse'
 
 # jj aliases
 # Most of that stuff is taken from here: https://x.com/dimfeld/status/1926863685487559038
@@ -170,14 +176,16 @@ export PATH="/Users/jaksa/.composer/vendor/bin":$PATH
 
 [[ -f "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh" ]] && builtin source "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh"
 
-alias par='php artisan'
-alias sail='./vendor/bin/sail'
-alias sar='./vendor/bin/sail artisan'
-
-export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
-
 alias claude="/Users/jaksa/.claude/local/claude"
 
+alias par='php artisan'
+alias sar='./vendor/bin/sail artisan'
+alias sail='./vendor/bin/sail'
+alias pint='./vendor/bin/pint'
+alias phpstan='./vendor/bin/phpstan'
+alias rector='./vendor/bin/rector'
+
+export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
 
 # Herd injected PHP 8.3 configuration.
 export HERD_PHP_83_INI_SCAN_DIR="/Users/jaksa/Library/Application Support/Herd/config/php/83/"
@@ -306,3 +314,26 @@ export GIT_EDITOR="code --wait"
 #   export PSQL_EDITOR='vim -c"set filetype=sql"'
 #   export GIT_EDITOR='vim'
 # fi
+
+codex() {
+  # Define project and global Codex paths
+  local project_codex_dir="$PWD/.codex"
+  local project_config="$project_codex_dir/config.toml"
+  local global_auth="${CODEX_GLOBAL_AUTH:-$HOME/.codex/auth.json}"
+
+  # If a project-level config exists, set up CODEX_HOME
+  if [ -f "$project_config" ]; then
+    export CODEX_HOME="$project_codex_dir"
+    mkdir -p "$CODEX_HOME"
+
+    # Symlink global auth.json into project .codex
+    if [ -f "$global_auth" ]; then
+      ln -sfn "$global_auth" "$CODEX_HOME/auth.json"
+    else
+      printf 'codex: warning: no global auth found at %s; you may need to auth once.\n' "$global_auth" >&2
+    fi
+  fi
+
+  # Proxy all arguments to the real codex binary
+  command codex "$@"
+}
