@@ -72,6 +72,9 @@ eval "$(tmuxifier init -)"
 # rustup
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# golang
+export PATH=$PATH:$HOME/go/bin
+
 # bun completions
 [ -s "/Users/jaksa/.bun/_bun" ] && source "/Users/jaksa/.bun/_bun"
 
@@ -300,20 +303,16 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # Set it to 10ms
 export KEYTIMEOUT=1
 
-export EDITOR="code --wait"
-export PSQL_EDITOR="nvim -c"set filetype=sql""
-export GIT_EDITOR="code --wait"
-
-# if type nvim &> /dev/null; then
-#   alias vim="nvim"
-#   export EDITOR="nvim"
-#   export PSQL_EDITOR="nvim -c"set filetype=sql""
-#   export GIT_EDITOR="nvim"
-# else
-#   export EDITOR='vim'
-#   export PSQL_EDITOR='vim -c"set filetype=sql"'
-#   export GIT_EDITOR='vim'
-# fi
+if type nvim &> /dev/null; then
+  alias vim="nvim"
+  export EDITOR="nvim"
+  export PSQL_EDITOR="nvim -c"set filetype=sql""
+  export GIT_EDITOR="nvim"
+else
+  export EDITOR='code --wait'
+  export PSQL_EDITOR='vim -c"set filetype=sql"'
+  export GIT_EDITOR='code --wait'
+fi
 
 codex() {
   # Define project and global Codex paths
@@ -337,3 +336,4 @@ codex() {
   # Proxy all arguments to the real codex binary
   command codex "$@"
 }
+
