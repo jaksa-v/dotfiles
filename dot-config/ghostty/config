@@ -1,7 +1,10 @@
 font-family = Dank Mono
-font-size = 18
+# font-family = Source Code Pro
+font-size = 17
 
-theme = dark:TokyoNight Moon,light:GitHub Light Default
+# theme = dark:Night Owl,light:GitHub Light Default
+theme = Night Owl
+window-theme = dark
 
 keybind = shift+enter=text:\n
 
