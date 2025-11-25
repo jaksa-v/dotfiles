@@ -99,7 +99,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 # git
-alias monsterclean='git clean -fdx -e .jj/'
+alias monsterclean='git clean -fdx'
 alias gst='git status'
 alias gaa='git add -A'
 alias gc='git commit'
@@ -130,39 +130,6 @@ alias hm='git log --format=%B -n 1 HEAD'
 alias gh-create-private='gh repo create --private --source=. --remote=origin && git push -u --all && gh browse'
 alias gh-create-public='gh repo create --public --source=. --remote=origin && git push -u --all && gh browse'
 
-# jj aliases
-# Most of that stuff is taken from here: https://x.com/dimfeld/status/1926863685487559038
-# Workflow:
-#   jj commit
-#   jjub
-#   jj git push
-
-# Get the closest ancestor bookmark
-alias jjpb="jj log -r 'latest(heads(ancestors(@) & bookmarks()), 1)' --limit 1 --no-graph --ignore-working-copy -T bookmarks | tr -d '*'"
-
-# jj update branch
-jj-update-branch() {
-  REV=${1:-@}
-  if [ $# -gt 0 ]; then
-    shift
-  fi
-  jj bookmark move $(jjpb) --to "$REV" "$@"
-}
-
-alias jjub=jj-update-branch
-alias jn='jj new'
-alias jc='jj commit'
-alias js='jj status'
-alias jf='jj git fetch'
-alias jp='jj git push'
-alias jd='jj diff'
-alias jjl="jj log"
-alias jjlt="jj log -r 'latest(ancestors(trunk()), 10)' --color=always -T 'builtin_log_oneline'"
-alias jl="jj log"
-alias jlr="jj lr"
-
-# source <(COMPLETE=zsh jj)
-
 export PATH="/Users/jaksa/.composer/vendor/bin":$PATH
 
 alias claude="/Users/jaksa/.claude/local/claude"
@@ -182,55 +149,10 @@ export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
 
 setopt prompt_subst
 
-jj_prompt_info() {
-  local dirty="%{$fg_bold[red]%} X%{$reset_color%}"
-  local clean=""
-  local conflicts="%{$fg_bold[yellow]%} !%{$reset_color%}"
-
-  # Get bookmark and change info
-  local bookmark=$(jj log -r @ --no-graph -T 'bookmarks' 2> /dev/null | tr -d '*' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-  local change_id=$(jj log -r @ --no-graph -T 'change_id.shortest()' 2> /dev/null) || return
-
-  # Check working copy status
-  local wc_status=""
-  if jj status | grep -q "Working copy changes:"; then
-    wc_status=$dirty
-  elif jj log -r @ --no-graph -T 'conflict' 2> /dev/null | grep -q "true"; then
-    wc_status=$conflicts
-  else
-    wc_status=$clean
-  fi
-
-  # Show bookmark if exists, otherwise change ID
-  local ref_display="${bookmark:-$change_id}"
-  echo " %{$fg_bold[green]%}${ref_display}${wc_status}%{$reset_color%}"
-}
-
 vcs_prompt_info() {
   local dirty="%{$fg_bold[red]%} X%{$reset_color%}"
   local clean=""
 
-  # Check if we're forcing git mode
-  if [[ "$VCS_PROMPT_MODE" == "git" ]]; then
-    # Force git mode - show git info even if jj is available
-    local dirstatus="$clean"
-    if [[ ! -z $(git status --porcelain 2> /dev/null | tail -n1) ]]; then
-      dirstatus=$dirty
-    fi
-
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-    echo " %{$fg_bold[green]%}${ref#refs/heads/}$dirstatus%{$reset_color%}"
-    return
-  fi
-
-  # Default behavior: check if we're in a jj repo
-  if command -v jj &>/dev/null && jj status &>/dev/null; then
-    jj_prompt_info
-    return
-  fi
-
-  # Fallback to Git
   local dirstatus="$clean"
   if [[ ! -z $(git status --porcelain 2> /dev/null | tail -n1) ]]; then
     dirstatus=$dirty
@@ -290,27 +212,13 @@ export EDITOR='code --wait'
 export PSQL_EDITOR='vim -c"set filetype=sql"'
 export GIT_EDITOR='code --wait'
 
-# CODEX WORKAROUND
 
-codex() {
-  # Define project and global Codex paths
-  local project_codex_dir="$PWD/.codex"
-  local project_config="$project_codex_dir/config.toml"
-  local global_auth="${CODEX_GLOBAL_AUTH:-$HOME/.codex/auth.json}"
 
-  # If a project-level config exists, set up CODEX_HOME
-  if [ -f "$project_config" ]; then
-    export CODEX_HOME="$project_codex_dir"
-    mkdir -p "$CODEX_HOME"
+# opencode
+export PATH=/Users/jaksa/.opencode/bin:$PATH
 
-    # Symlink global auth.json into project .codex
-    if [ -f "$global_auth" ]; then
-      ln -sfn "$global_auth" "$CODEX_HOME/auth.json"
-    else
-      printf 'codex: warning: no global auth found at %s; you may need to auth once.\n' "$global_auth" >&2
-    fi
-  fi
+# cursor agent
+export PATH="$HOME/.local/bin:$PATH"
 
-  # Proxy all arguments to the real codex binary
-  command codex "$@"
-}
+# Added by Antigravity
+export PATH="/Users/jaksa/.antigravity/antigravity/bin:$PATH"

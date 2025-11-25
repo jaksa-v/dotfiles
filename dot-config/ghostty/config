@@ -3,7 +3,8 @@ font-family = Dank Mono
 font-size = 17
 
 # theme = dark:Night Owl,light:GitHub Light Default
-theme = Night Owl
+theme = GitHub Dark
+# theme = Gruvbox Dark Hard
 window-theme = dark
 
 keybind = shift+enter=text:\n
