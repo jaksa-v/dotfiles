@@ -55,7 +55,9 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # zoxide
-alias cd="z"
+if [[ $- == *i* ]]; then
+  alias cd="z"
+fi
 eval "$(zoxide init zsh)"
 
 # fzf

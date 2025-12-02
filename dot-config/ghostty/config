@@ -1,10 +1,7 @@
-font-family = Dank Mono
-# font-family = Source Code Pro
-font-size = 17
+font-family = TX-02 Retina SemiCondensed
+font-size = 16
 
-# theme = dark:Night Owl,light:GitHub Light Default
-theme = GitHub Dark
-# theme = Gruvbox Dark Hard
+theme = Gruvbox Dark Hard
 window-theme = dark
 
 keybind = shift+enter=text:\n
