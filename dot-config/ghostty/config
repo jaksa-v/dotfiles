@@ -1,6 +1,10 @@
 font-family = TX-02 Retina SemiCondensed
 font-size = 16
 
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
 theme = Gruvbox Dark Hard
 window-theme = dark
 
