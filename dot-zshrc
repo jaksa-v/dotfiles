@@ -22,6 +22,7 @@ setopt HIST_FIND_NO_DUPS      # Do not display a line previously found.
 setopt HIST_IGNORE_SPACE      # Dont record an entry starting with a space.
 setopt HIST_SAVE_NO_DUPS      # Dont write duplicate entries in the history file.
 setopt SHARE_HISTORY          # Share history between all sessions.
+setopt HIST_REDUCE_BLANKS     # Remove superfluous blanks from history
 unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) immediately
 
 #############
@@ -36,10 +37,11 @@ fi
 
 # Speed up completion init, see: https://gist.github.com/ctechols/ca1035271ad134841284
 autoload -Uz compinit
-for dump in ~/.zcompdump(N.mh+24); do
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
   compinit
-done
-compinit -C
+else
+  compinit -C
+fi
 
 # unsetopt menucomplete
 unsetopt flowcontrol
@@ -47,6 +49,9 @@ setopt auto_menu
 setopt complete_in_word
 setopt always_to_end
 setopt auto_pushd
+setopt AUTO_CD                # Type directory name to cd into it
+setopt CORRECT                # Suggest command corrections
+setopt CORRECT_ALL            # Suggest argument corrections
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
@@ -69,7 +74,7 @@ export FPATH="$HOME/zsh.d/eza/completions/zsh:$FPATH"
 
 # uv & python
 eval "$(uv generate-shell-completion zsh)"
-export PATH="/Users/jaksa/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
 
 # rustup
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -92,19 +97,17 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 # psql
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
+# composer
+export PATH="/Users/jaksa/.composer/vendor/bin":$PATH
+
 # git
-alias monsterclean='git clean -fdx'
 alias gst='git status'
 alias gaa='git add -A'
 alias gc='git commit'
+alias gjc='git-jira-commit'
 alias gcm='git checkout main'
 alias gd='git diff'
 alias gdc='git diff --cached'
@@ -132,18 +135,12 @@ alias hm='git log --format=%B -n 1 HEAD'
 alias gh-create-private='gh repo create --private --source=. --remote=origin && git push -u --all && gh browse'
 alias gh-create-public='gh repo create --public --source=. --remote=origin && git push -u --all && gh browse'
 
-export PATH="/Users/jaksa/.composer/vendor/bin":$PATH
-
-alias claude="/Users/jaksa/.claude/local/claude"
-
 alias par='php artisan'
 alias sar='./vendor/bin/sail artisan'
 alias sail='./vendor/bin/sail'
 alias pint='./vendor/bin/pint'
 alias phpstan='./vendor/bin/phpstan'
 alias rector='./vendor/bin/rector'
-
-export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
 
 #########
 # PROMPT
@@ -202,6 +199,9 @@ simple_prompt() {
 # ENV
 ########
 
+export ZSH_CACHE_DIR="$HOME/.zsh_cache"
+mkdir -p $ZSH_CACHE_DIR
+
 export COLOR_PROFILE="dark"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
 
@@ -214,13 +214,50 @@ export EDITOR='code --wait'
 export PSQL_EDITOR='vim -c"set filetype=sql"'
 export GIT_EDITOR='code --wait'
 
-
-
 # opencode
 export PATH=/Users/jaksa/.opencode/bin:$PATH
 
-# cursor agent
+# .local/bin
 export PATH="$HOME/.local/bin:$PATH"
 
-# Added by Antigravity
-export PATH="/Users/jaksa/.antigravity/antigravity/bin:$PATH"
+# PHP
+export PATH="/opt/homebrew/opt/php@8.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.4/sbin:$PATH"
+
+
+# Herd injected PHP binary.
+export PATH="/Users/jaksa/Library/Application Support/Herd/bin/":$PATH
+
+
+# Herd injected PHP 8.2 configuration.
+export HERD_PHP_82_INI_SCAN_DIR="/Users/jaksa/Library/Application Support/Herd/config/php/82/"
+
+# Herd injected PHP 8.4 configuration.
+export HERD_PHP_84_INI_SCAN_DIR="/Users/jaksa/Library/Application Support/Herd/config/php/84/"
+
+# Herd injected PHP 8.5 configuration.
+export HERD_PHP_85_INI_SCAN_DIR="/Users/jaksa/Library/Application Support/Herd/config/php/85/"
+
+# Herd injected NVM configuration
+export NVM_DIR="/Users/jaksa/Library/Application Support/Herd/config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+[[ -f "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh" ]] && builtin source "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh"
+
+alias aws-mfa="source /usr/local/bin/aws_mfa_signin.sh"
+
+alias pod="/usr/local/bin/seqster-pods.sh"
+alias qa-pod="/usr/local/bin/qa-pods.sh"
+
+alias dsequ='APP_ENV=local docker compose -f docker-compose.seqster.yml --env-file .env.seqster up -d'
+alias dseqd='APP_ENV=local docker compose -f docker-compose.seqster.yml --env-file .env.seqster down'
+alias dseqr='APP_ENV=local docker compose -f docker-compose.seqster.yml --env-file .env.seqster restart'
+alias dphiu='APP_ENV=local docker compose -f docker-compose.seqsterphi.yml --env-file .env.seqster up -d'
+alias dphid='APP_ENV=local docker compose -f docker-compose.seqsterphi.yml --env-file .env.seqster down'
+alias dphir='APP_ENV=local docker compose -f docker-compose.seqsterphi.yml --env-file .env.seqster restart'
+alias drsu='APP_ENV=local docker compose --env-file .env.seqster up -d'
+alias drsd='APP_ENV=local docker compose --env-file .env.seqster down'
+alias drsr='APP_ENV=local docker compose --env-file .env.seqster restart'
+
+alias oc="opencode"
+alias cc="claude --dangerously-skip-permissions"
