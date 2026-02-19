@@ -7,9 +7,9 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-theme = dark:TokyoNight,light:GitHub Light Default
+theme = Catppuccin Mocha
 
-keybind = shift+enter=text:\n
+keybind = shift+enter=csi:13;2u
 
 # keybind = ctrl+h=goto_split:left
 # keybind = ctrl+j=goto_split:bottom
