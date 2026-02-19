@@ -1,0 +1,90 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "edit_predictions": {
+    "provider": "zed",
+  },
+  "icon_theme": "Bearded Icon Theme",
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "Catppuccin Mocha - No Italics",
+  },
+  "context_servers": {},
+  "agent_servers": {
+    "OpenCode": {
+      "type": "custom",
+      "command": "opencode",
+      "args": ["acp"],
+    },
+  },
+  "buffer_font_size": 14,
+  "ui_font_size": 14,
+  "ui_font_family": "MonoLisa Trial",
+  "buffer_font_family": "MonoLisa Trial",
+  "indent_guides": {
+    "enabled": false,
+  },
+  "current_line_highlight": "none",
+  "project_panel": {
+    "dock": "right",
+    "default_width": 280,
+  },
+  "outline_panel": {
+    "dock": "right",
+  },
+  "git": {
+    "inline_blame": {
+      // "enabled": false,
+    },
+  },
+  "git_panel": {
+    "tree_view": true,
+  },
+  "tabs": {
+    "git_status": true,
+    "file_icons": true,
+    // "show_diagnostics": "errors",
+  },
+  "preview_tabs": {
+    "enabled": false,
+    "enable_keep_preview_on_code_navigation": false,
+  },
+  "vim_mode": true,
+  "vim": {
+    "toggle_relative_line_numbers": true,
+  },
+  "agent": {
+    "tool_permissions": {
+      "default": "allow",
+    },
+    "play_sound_when_agent_done": true,
+  },
+  "prettier": {
+    "allowed": true,
+  },
+  "file_types": {
+    "PHP": ["*.php"],
+    "Blade": ["*.blade.php"],
+  },
+  "languages": {
+    "PHP": {
+      "language_servers": ["phpactor", "!intelephense", "!phptools", "..."],
+      "formatter": {
+        "external": {
+          "command": "/Users/yourname/.local/bin/php-format",
+          "arguments": ["{buffer_path}"],
+        },
+      },
+    },
+    "Blade": {
+      "language_servers": ["tailwindcss-language-server", "..."],
+    },
+  },
+}
