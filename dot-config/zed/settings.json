@@ -66,9 +66,6 @@
     },
     "play_sound_when_agent_done": true,
   },
-  "prettier": {
-    "allowed": true,
-  },
   "file_types": {
     "PHP": ["*.php"],
     "Blade": ["*.blade.php"],
