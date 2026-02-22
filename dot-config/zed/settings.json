@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
   "edit_predictions": {
     "provider": "zed",
   },
@@ -34,7 +35,7 @@
   "current_line_highlight": "none",
   "project_panel": {
     "dock": "right",
-    "default_width": 280,
+    "default_width": 480,
   },
   "outline_panel": {
     "dock": "right",
@@ -75,7 +76,7 @@
       "language_servers": ["phpactor", "!intelephense", "!phptools", "..."],
       "formatter": {
         "external": {
-          "command": "/Users/yourname/.local/bin/php-format",
+          "command": "/Users/jaksa/.local/bin/php-format",
           "arguments": ["{buffer_path}"],
         },
       },
