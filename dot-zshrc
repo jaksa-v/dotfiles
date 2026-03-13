@@ -217,9 +217,9 @@ export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # Set it to 10ms
 export KEYTIMEOUT=1
 
-export EDITOR='zed --wait'
+export EDITOR='code --wait'
 export PSQL_EDITOR='vim -c"set filetype=sql"'
-export GIT_EDITOR='zed --wait'
+export GIT_EDITOR='code --wait'
 
 # opencode
 export PATH=/Users/jaksa/.opencode/bin:$PATH

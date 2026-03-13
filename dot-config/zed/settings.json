@@ -7,82 +7,89 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "edit_predictions": {
-    "provider": "zed",
+    "provider": "zed"
   },
   "icon_theme": "Bearded Icon Theme",
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Catppuccin Mocha - No Italics",
+    "dark": "Ayu Dark"
   },
   "context_servers": {},
   "agent_servers": {
     "OpenCode": {
+      "favorite_models": [
+        "opencode/kimi-k2.5",
+        "opencode/glm-5",
+        "opencode/minimax-m2.5",
+        "openai/gpt-5.3-codex"
+      ],
       "type": "custom",
       "command": "opencode",
-      "args": ["acp"],
-    },
+      "args": ["acp"]
+    }
   },
   "buffer_font_size": 14,
   "ui_font_size": 14,
   "ui_font_family": "MonoLisa Trial",
   "buffer_font_family": "MonoLisa Trial",
   "indent_guides": {
-    "enabled": false,
+    "enabled": false
   },
   "current_line_highlight": "none",
   "project_panel": {
     "dock": "right",
-    "default_width": 480,
+    "default_width": 480
   },
   "outline_panel": {
-    "dock": "right",
+    "dock": "right"
   },
   "git": {
     "inline_blame": {
-      // "enabled": false,
-    },
+      "enabled": false
+    }
   },
   "git_panel": {
-    "tree_view": true,
+    "tree_view": true
   },
   "tabs": {
     "git_status": true,
-    "file_icons": true,
+    "file_icons": true
     // "show_diagnostics": "errors",
   },
   "preview_tabs": {
     "enabled": false,
-    "enable_keep_preview_on_code_navigation": false,
+    "enable_keep_preview_on_code_navigation": false
   },
-  "vim_mode": true,
-  "vim": {
-    "toggle_relative_line_numbers": true,
-  },
+  // "vim_mode": true,
+  // "vim": {
+  //   "toggle_relative_line_numbers": true,
+  // },
   "agent": {
     "tool_permissions": {
-      "default": "allow",
+      "default": "allow"
     },
-    "play_sound_when_agent_done": true,
+    "play_sound_when_agent_done": true
   },
   "file_types": {
     "PHP": ["*.php"],
-    "Blade": ["*.blade.php"],
+    "Blade": ["*.blade.php"]
   },
   "languages": {
     "PHP": {
+      "show_edit_predictions": true,
       "language_servers": ["phpactor", "!intelephense", "!phptools", "..."],
       "formatter": {
         "external": {
           "command": "/Users/jaksa/.local/bin/php-format",
-          "arguments": ["{buffer_path}"],
-        },
-      },
+          "arguments": ["{buffer_path}"]
+        }
+      }
     },
     "Blade": {
-      "language_servers": ["tailwindcss-language-server", "..."],
-    },
-  },
+      "language_servers": ["tailwindcss-language-server", "..."]
+    }
+  }
 }

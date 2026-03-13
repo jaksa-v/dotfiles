@@ -7,12 +7,11 @@ font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-theme = Catppuccin Mocha
+theme = light:Alabaster,dark:Monokai Pro Spectrum
 
-keybind = shift+enter=csi:13;2u
+# keybind = shift+enter=csi:13;2u
 
-# keybind = ctrl+h=goto_split:left
-# keybind = ctrl+j=goto_split:bottom
-# keybind = ctrl+k=goto_split:top
-# keybind = ctrl+l=goto_split:right
-
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
